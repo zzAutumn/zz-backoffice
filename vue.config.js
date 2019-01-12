@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production' ? 'zz-back' : '/',
   devServer: {
     port: 8000,
     proxy: {
