@@ -6,14 +6,14 @@
       <div class="close close-btn">x</div>
       <div class="form-title">Login In</div>
       <div class="input-group">
-        <input type="text" id="name">
+        <input type="text" id="name" v-model="form.username" @blur="checkInput($event)">
         <label for="name">Username</label>
       </div>
       <div class="input-group">
-        <input type="text" id="password">
+        <input type="text" id="password" v-model="form.password" @blur="checkInput($event)">
         <label for="password">Password</label>
       </div>
-      <div class="form-button">Go</div>
+      <div class="form-button" @click="submit">Go</div>
       <div class="author">zzAutumn.cn @2019</div>
     </div>
   </div>
@@ -25,6 +25,28 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class HelloWorld extends Vue {
+  form: object = {
+    username: '',
+    password: '',
+  }
+
+  submit() {
+    console.log(this.form);
+  }
+
+  checkInput(e: any) {
+    const { target } = e;
+    target.value.length > 0 ? target.classList.add('active')
+      : target.classList.remove('active');
+  }
+
+  closeModal() {
+    const wrap = document.querySelector('#mainButton');
+    if (wrap) {
+      wrap.classList.remove('active');
+    }
+  }
+
   mounted() {
     const openBtn = document.querySelector('.open');
     const closeBtn = document.querySelector('.close');

@@ -89,7 +89,8 @@ module.exports = {
     // 类型定义的冒号前后是否需要空格
     // 默认冒号前必须没有空格，冒号后必须有空格
     'typescript/type-annotation-spacing': 'error',
-    'class-methods-use-this': 'off'
+    'class-methods-use-this': 'off',
+    'no-unused-expressions': 'off'
   },
   parserOptions: {
     parser: 'typescript-eslint-parser',
