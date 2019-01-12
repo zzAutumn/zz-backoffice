@@ -46,6 +46,8 @@ export default class Login extends Vue {
       this.$router.push('/');
     } else {
       this.showError = true;
+      this.form.name = '';
+      this.form.password = '';
       this.errorTimer = setTimeout(() => {
         this.showError = false;
       }, 2000);
