@@ -6,11 +6,11 @@
       <div class="close close-btn">x</div>
       <div class="form-title">Login In</div>
       <div class="input-group">
-        <input type="text" id="name" v-model="form.username" @blur="checkInput($event)">
+        <input type="text" id="name" v-model="form.name" @blur="checkInput($event)">
         <label for="name">Username</label>
       </div>
       <div class="input-group">
-        <input type="text" id="password" v-model="form.password" @blur="checkInput($event)">
+        <input type="password" id="password" v-model="form.password" @blur="checkInput($event)">
         <label for="password">Password</label>
       </div>
       <div class="form-button" @click="submit">Go</div>
@@ -31,7 +31,7 @@ export default class Login extends Vue {
   @Mutation('setToken') setToken!: (token: string) => void;
 
   form = {
-    username: '',
+    name: '',
     password: '',
   }
   showError: boolean = false;
@@ -41,8 +41,8 @@ export default class Login extends Vue {
     const result = await this.$service.user.checkUser(this.form);
     console.log(result);
     if (result.data.code === '200') {
-      localStorage.zzToken = this.form.username;
-      this.setToken(this.form.username);
+      localStorage.zzToken = this.form.name;
+      this.setToken(this.form.name);
       this.$router.push('/');
     } else {
       this.showError = true;
@@ -84,6 +84,10 @@ export default class Login extends Vue {
         }
       });
     }
+  }
+
+  beforeDestroy() {
+    clearTimeout(this.errorTimer);
   }
 }
 </script>
