@@ -14,6 +14,7 @@
         <label for="password">Password</label>
       </div>
       <div class="form-button" @click="submit">Go</div>
+      <span class="error error-msg" v-if="showError">登录失败，请联系管理员</span>
       <div class="author">zzAutumn.cn @2019</div>
     </div>
   </div>
@@ -22,16 +23,33 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { State, Mutation } from 'vuex-class';
 
 @Component
-export default class HelloWorld extends Vue {
-  form: object = {
+export default class Login extends Vue {
+  @State token!: string;
+  @Mutation('setToken') setToken!: (token: string) => void;
+
+  form = {
     username: '',
     password: '',
   }
+  showError: boolean = false;
+  errorTimer: any = null;
 
-  submit() {
-    console.log(this.form);
+  async submit() {
+    const result = await this.$service.user.checkUser(this.form);
+    console.log(result);
+    if (result.data.code === '200') {
+      localStorage.zzToken = this.form.username;
+      this.setToken(this.form.username);
+      this.$router.push('/');
+    } else {
+      this.showError = true;
+      this.errorTimer = setTimeout(() => {
+        this.showError = false;
+      }, 2000);
+    }
   }
 
   checkInput(e: any) {
@@ -188,6 +206,12 @@ export default class HelloWorld extends Vue {
         background-color: transparent;
       }
     }
+    .error-msg {
+      display: inline-block;
+      color: #f1272b;
+      font-size: 14px;
+      margin-top: 20px;
+    }
 
     .input-group {
       width: 100%;
@@ -241,4 +265,6 @@ export default class HelloWorld extends Vue {
     letter-spacing: initial;
   }
 }
+
 </style>
+<style scoped>

@@ -6,13 +6,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
+// @Component({
+//   components: {
+//     HelloWorld,
+//   },
+// })
 export default class App extends Vue {}
 </script>
 
@@ -28,4 +27,11 @@ body {
   color: #2c3e50;
   min-height: 100vh;
 }
+/* .el-message.el-message--warning.login-msg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: #fe6c6f;
+  padding: 0 50px;
+} */
 </style>

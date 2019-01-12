@@ -90,7 +90,10 @@ module.exports = {
     // 默认冒号前必须没有空格，冒号后必须有空格
     'typescript/type-annotation-spacing': 'error',
     'class-methods-use-this': 'off',
-    'no-unused-expressions': 'off'
+    'no-unused-expressions': 'off',
+    'import/prefer-default-export': 'off',
+    'lines-between-class-members': 'off',
+    'no-param-reassign': 'off',
   },
   parserOptions: {
     parser: 'typescript-eslint-parser',
