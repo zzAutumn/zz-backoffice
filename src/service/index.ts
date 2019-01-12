@@ -1,11 +1,9 @@
 import Vue from 'vue';
 import BaseService from './services/BaseService';
-import ArticleService from './services/UserService';
+import UserService from './services/UserService';
 
 const service = {
   base: new BaseService(),
-  article: new ArticleService(),
+  user: new UserService(),
 };
-
-Vue.prototype.$service = service;
 export default service;
