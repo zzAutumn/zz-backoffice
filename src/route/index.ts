@@ -5,7 +5,7 @@ Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
-  base: '/zz-backoffice/',
+  // base: '/zz-backoffice/',
   routes: [
     {
       path: '/login',
