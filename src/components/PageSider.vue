@@ -11,7 +11,7 @@
       unique-opened
     >
       <el-submenu
-        v-for="(item, index) in menuList"
+        v-for="(item) in menuList"
         :key="item.name"
         :index="item.name"
       >

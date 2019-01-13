@@ -5,6 +5,7 @@ import router from './route';
 import service from './service';
 import store from './store';
 import App from './App.vue';
+import '@/assets/main.css';
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
