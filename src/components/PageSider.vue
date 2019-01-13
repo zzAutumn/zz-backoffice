@@ -5,13 +5,28 @@
       background-color="#614ce5"
       text-color="#fff"
       active-text-color="#ffd04b"
+      router
     >
-      <el-submenu index="1">
+      <!-- <el-submenu index="1">
         <template slot="title">
           <span>文章管理</span>
         </template>
         <el-menu-item index="1-1">编辑文章</el-menu-item>
         <el-menu-item index="1-2">文章列表</el-menu-item>
+      </el-submenu> -->
+      <el-submenu
+        v-for="(item, index) in menuList"
+        :key="item.name"
+        :index="item.name"
+      >
+        <template slot="title">
+          <span>{{item.title}}</span>
+        </template>
+        <el-menu-item
+          v-for="(subItem) in item.children"
+          :key="subItem.name"
+          :index="subItem.to"
+        >{{subItem.title}}</el-menu-item>
       </el-submenu>
     </el-menu>
   </el-aside>
@@ -22,7 +37,24 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class PageSider extends Vue {
-
+  menuList: object = [
+    {
+      title: '文章管理',
+      name: 'ArticleManage',
+      children: [
+        {
+          to: '/editArticle',
+          title: '编辑文章',
+          name: 'EditArticle',
+        },
+        {
+          to: '/listArticle',
+          title: '文章列表',
+          name: 'ListArticle',
+        },
+      ],
+    },
+  ]
 }
 
 </script>

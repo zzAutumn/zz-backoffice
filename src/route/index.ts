@@ -22,6 +22,11 @@ const router = new Router({
           name: 'EditArticle',
           component: () => import('@/views/article/ArticleEdit.vue'),
         },
+        {
+          path: '/listArticle',
+          name: 'ListArticle',
+          component: () => import('@/views/article/ArticleList.vue'),
+        },
       ],
     },
   ],
