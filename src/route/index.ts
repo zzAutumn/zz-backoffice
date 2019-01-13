@@ -16,6 +16,13 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: () => import('@/views/Home.vue'),
+      children: [
+        {
+          path: '/editArticle',
+          name: 'EditArticle',
+          component: () => import('@/views/article/ArticleEdit.vue'),
+        },
+      ],
     },
   ],
 });

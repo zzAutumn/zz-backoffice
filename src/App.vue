@@ -27,11 +27,4 @@ body {
   color: #2c3e50;
   min-height: 100vh;
 }
-/* .el-message.el-message--warning.login-msg {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  background-color: #fe6c6f;
-  padding: 0 50px;
-} */
 </style>
