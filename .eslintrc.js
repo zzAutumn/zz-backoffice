@@ -94,6 +94,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'lines-between-class-members': 'off',
     'no-param-reassign': 'off',
+    'import/no-extraneous-dependencies': 'off',
   },
   parserOptions: {
     parser: 'typescript-eslint-parser',

@@ -6,14 +6,10 @@
       text-color="#fff"
       active-text-color="#ffd04b"
       router
+      :default-active="activeItem"
+      :default-openeds="activeArr"
+      unique-opened
     >
-      <!-- <el-submenu index="1">
-        <template slot="title">
-          <span>文章管理</span>
-        </template>
-        <el-menu-item index="1-1">编辑文章</el-menu-item>
-        <el-menu-item index="1-2">文章列表</el-menu-item>
-      </el-submenu> -->
       <el-submenu
         v-for="(item, index) in menuList"
         :key="item.name"
@@ -37,6 +33,8 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class PageSider extends Vue {
+  activeItem: string = '/editArticle'
+  activeArr: object = ['ArticleManage']
   menuList: object = [
     {
       title: '文章管理',
@@ -66,6 +64,9 @@ export default class PageSider extends Vue {
   color: #fff;
   .zz-menu {
     border-right: none;
+    .el-submenu.is-active,.el-menu-item.is-active {
+      background-color: #2b2b2b4f !important;
+    }
   }
 }
 </style>

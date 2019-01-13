@@ -17,3 +17,4 @@ declare module '*.vue' {
 // declare module '@zz/perf/vue'
 // declare module 'raven-js'
 // declare module 'raven-js/plugins/vue'
+declare module 'vue-quill-editor'
