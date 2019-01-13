@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? 'zz-backoffice' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/zz-backoffice/' : '/',
   devServer: {
     port: 8000,
     proxy: {
