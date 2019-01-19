@@ -29,11 +29,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 
 @Component
 export default class PageSider extends Vue {
-  activeItem: string = '/editArticle'
+  activeItem: string = '/listArticle'
   activeArr: object = ['ArticleManage']
   menuList: object = [
     {
@@ -53,6 +53,21 @@ export default class PageSider extends Vue {
       ],
     },
   ]
+
+  // 更新菜单选中状态
+  updateMenuActive(path: string) {
+    this.activeItem = path;
+  }
+
+  @Watch('$route')
+  onRouteChange(val: any) {
+    this.updateMenuActive(val.path);
+  }
+
+  mounted() {
+    const { path } = this.$route;
+    this.updateMenuActive(path);
+  }
 }
 
 </script>

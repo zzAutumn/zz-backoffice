@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="foot-row">
-      <el-button plain>提交</el-button>
+      <el-button plain @click="submit">提交</el-button>
     </div>
   </div>
 </template>
@@ -46,6 +46,12 @@ import 'quill/dist/quill.bubble.css';
 
 import { Component, Vue } from 'vue-property-decorator';
 import { quillEditor } from 'vue-quill-editor';
+
+interface LoginForm {
+  title: string;
+  content: string;
+  tags: string[];
+}
 
 @Component({
   components: {
@@ -58,10 +64,10 @@ export default class ArticleEdit extends Vue {
     saveTagInput: any;
   }
   tag: string = ''
-  form = {
+  form: LoginForm = {
     title: '',
     content: '',
-    tags: ['js'],
+    tags: [],
   }
   editorOption: object = {}
   inputVisible: boolean = false
@@ -80,6 +86,19 @@ export default class ArticleEdit extends Vue {
   }
   handleClose(tag: string) {
     this.form.tags.splice(this.form.tags.indexOf(tag), 1);
+  }
+  async submit() {
+    console.log(this.form);
+    const result = await this.$service.article.saveArticle(this.form);
+    if (result.code === '200') {
+      this.$message({
+        message: '文章保存成功',
+        type: 'success',
+      });
+      this.$router.push('/listArticle');
+    } else {
+      this.$message.error('文章保存失败');
+    }
   }
 }
 </script>

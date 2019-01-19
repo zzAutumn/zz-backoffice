@@ -16,6 +16,7 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: () => import('@/views/Home.vue'),
+      redirect: '/listArticle',
       children: [
         {
           path: '/editArticle',
