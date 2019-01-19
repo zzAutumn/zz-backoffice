@@ -88,7 +88,6 @@ export default class ArticleEdit extends Vue {
     this.form.tags.splice(this.form.tags.indexOf(tag), 1);
   }
   async submit() {
-    console.log(this.form);
     const result = await this.$service.article.saveArticle(this.form);
     if (result.code === '200') {
       this.$message({

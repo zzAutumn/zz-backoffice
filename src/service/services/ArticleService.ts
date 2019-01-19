@@ -6,4 +6,10 @@ export default class ArticleService extends BaseService {
     const result = await this.post(url, data);
     return result;
   }
+
+  async getArticles(data: any) {
+    const url = this.API.article.getArticleList;
+    const result = await this.post(url, data);
+    return result;
+  }
 }
