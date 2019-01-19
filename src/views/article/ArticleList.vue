@@ -92,9 +92,10 @@ export default class ArticleList extends Vue {
     this.loading = false;
   }
 
-  handleEdit(index: number, row: object) {
-    console.log(index);
-    console.log(row);
+  handleEdit(index: number, row: any) {
+    const { id } = row;
+    localStorage.articleId = id;
+    this.$router.push('/editArticle');
   }
   openDelete(index: number, row: any) {
     // console.log(index, row);
@@ -104,7 +105,12 @@ export default class ArticleList extends Vue {
       type: 'warning',
     }).then(async () => {
       console.log(row.id);
-    });
+      const result = await this.$service.article.delArticle({ id: row.id });
+      if (result.code === '200') {
+        this.$message.success('删除文章成功');
+        this.getData();
+      }
+    }).catch(() => {});
   }
 
   handleSizeChange(val: number) {

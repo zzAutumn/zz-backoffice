@@ -12,4 +12,16 @@ export default class ArticleService extends BaseService {
     const result = await this.post(url, data);
     return result;
   }
+
+  async delArticle(data: any) {
+    const url = this.API.article.deleteById;
+    const result = await this.post(url, data);
+    return result;
+  }
+
+  async getArticleById(data: any) {
+    const url = this.API.article.findById;
+    const result = await this.post(url, data);
+    return result;
+  }
 }

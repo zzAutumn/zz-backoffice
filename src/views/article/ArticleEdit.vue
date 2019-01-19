@@ -48,6 +48,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { quillEditor } from 'vue-quill-editor';
 
 interface LoginForm {
+  id: number|null;
   title: string;
   content: string;
   tags: string[];
@@ -65,12 +66,25 @@ export default class ArticleEdit extends Vue {
   }
   tag: string = ''
   form: LoginForm = {
+    id: null,
     title: '',
     content: '',
     tags: [],
   }
   editorOption: object = {}
   inputVisible: boolean = false
+
+  async getData(articleId: number) {
+    const result = await this.$service.article.getArticleById({ id: articleId });
+    if (result.code === '200') {
+      const {
+        title, content, assignTags, id,
+      } = result.data;
+      Object.assign(this.form, { title, content, id });
+      const tags = assignTags.split(',');
+      this.form.tags = tags;
+    }
+  }
 
   handleInputConfirm() {
     const inputVal = this.tag;
@@ -98,6 +112,16 @@ export default class ArticleEdit extends Vue {
     } else {
       this.$message.error('文章保存失败');
     }
+  }
+
+  created() {
+    if (localStorage.articleId) {
+      this.getData(localStorage.articleId);
+    }
+  }
+
+  destroyed() {
+    localStorage.articleId && localStorage.removeItem('articleId');
   }
 }
 </script>
