@@ -14,6 +14,9 @@ const API: Api = {
     deleteById: '/zzautumn/v1/article/deleteById',
     findById: '/zzautumn/v1/article/getById',
   },
+  upload: {
+    img: '/zzautumn/v1/upload/img',
+  },
 };
 
 export default API;

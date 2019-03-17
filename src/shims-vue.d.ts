@@ -18,3 +18,4 @@ declare module '*.vue' {
 // declare module 'raven-js'
 // declare module 'raven-js/plugins/vue'
 declare module 'vue-quill-editor'
+declare module 'quill-image-extend-module'

@@ -34,6 +34,18 @@
         size="small" @click="showInput">+ New Tag</el-button>
       </div>
     </div>
+    <el-upload
+      class="upload-control"
+      action="/zzautumn/v1/upload/img"
+      :file-list="imgList"
+      :on-success="imgSuccess"
+      :on-error="imgError"
+      :limit="1"
+      accept=".jpeg,.jpg,.png"
+      list-type="picture">
+      <el-button size="small" type="primary">点击上传文章大图</el-button>
+      <div slot="tip" class="el-upload__tip">只能上传jpeg/jpg/png文件</div>
+    </el-upload>
     <div class="foot-row">
       <el-button plain @click="submit">提交</el-button>
     </div>
@@ -45,13 +57,17 @@ import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 
 import { Component, Vue } from 'vue-property-decorator';
-import { quillEditor } from 'vue-quill-editor';
+import { quillEditor, Quill } from 'vue-quill-editor';
+import { container, ImageExtend, QuillWatch } from 'quill-image-extend-module';
+
+Quill.register('modules/ImageExtend', ImageExtend);
 
 interface LoginForm {
   id: number|null;
   title: string;
   content: string;
   tags: string[];
+  imgBanner: string;
 }
 
 @Component({
@@ -70,9 +86,29 @@ export default class ArticleEdit extends Vue {
     title: '',
     content: '',
     tags: [],
+    imgBanner: '',
   }
-  editorOption: object = {}
+  // 富文本框参数设置
+  editorOption: object = {
+    modules: {
+      ImageExtend: {
+        loading: true,
+        name: 'file',
+        action: '/zzautumn/v1/upload/img',
+        response: (res: any) => res.data,
+      },
+      toolbar: {
+        container,
+        handlers: {
+          image: function () {
+            QuillWatch.emit(this.quill.id);
+          },
+        },
+      },
+    },
+  }
   inputVisible: boolean = false
+  imgList: object = []
 
   async getData(articleId: number) {
     const result = await this.$service.article.getArticleById({ id: articleId });
@@ -101,7 +137,18 @@ export default class ArticleEdit extends Vue {
   handleClose(tag: string) {
     this.form.tags.splice(this.form.tags.indexOf(tag), 1);
   }
+  // 上传图片成功
+  imgSuccess(response: any, file: any) {
+    if (response.result) {
+      this.form.imgBanner = response.data;
+    }
+  }
+  // 上传图片失败
+  imgError(err: any, file: any) {
+    this.$message.error(JSON.stringify(err));
+  }
   async submit() {
+    console.log(this.form);
     const result = await this.$service.article.saveArticle(this.form);
     if (result.code === '200') {
       this.$message({
@@ -178,6 +225,9 @@ export default class ArticleEdit extends Vue {
         vertical-align: bottom;
       }
     }
+  }
+  .upload-control {
+    margin: 20px 0;
   }
   .foot-row {
     margin-top: 20px;

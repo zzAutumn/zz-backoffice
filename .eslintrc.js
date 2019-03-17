@@ -95,6 +95,8 @@ module.exports = {
     'lines-between-class-members': 'off',
     'no-param-reassign': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'func-names': 'off',
+    'object-shorthand': 'off'
   },
   parserOptions: {
     parser: 'typescript-eslint-parser',
