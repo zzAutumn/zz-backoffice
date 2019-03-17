@@ -9,6 +9,15 @@
       v-model="form.content"
       :options='editorOption'
     ></quill-editor>
+    <div class="intro one-row">
+      <span class="row-label">简介: </span>
+      <el-input
+        type="textarea"
+        :rows="4"
+        placeholder="请输入文章简介"
+        v-model="form.intro">
+      </el-input>
+    </div>
     <div class="tag-bar">
       <span class="tag-label">标签: </span>
       <div class="tags">
@@ -68,6 +77,7 @@ interface LoginForm {
   content: string;
   tags: string[];
   imgBanner: string;
+  intro: string;
 }
 
 @Component({
@@ -87,6 +97,7 @@ export default class ArticleEdit extends Vue {
     content: '',
     tags: [],
     imgBanner: '',
+    intro: '',
   }
   // 富文本框参数设置
   editorOption: object = {
@@ -149,6 +160,9 @@ export default class ArticleEdit extends Vue {
   }
   async submit() {
     console.log(this.form);
+    if (!this.validateForm(this.form)) {
+      return;
+    }
     const result = await this.$service.article.saveArticle(this.form);
     if (result.code === '200') {
       this.$message({
@@ -159,6 +173,26 @@ export default class ArticleEdit extends Vue {
     } else {
       this.$message.error('文章保存失败');
     }
+  }
+
+  validateForm(form: LoginForm) {
+    if (form.title === '') {
+      this.$message.error('请填写标题');
+      return false;
+    }
+    if (form.content === '') {
+      this.$message.error('请填写文章内容');
+      return false;
+    }
+    if (form.imgBanner === '') {
+      this.$message.error('请上传文章大图');
+      return false;
+    }
+    if (form.intro === '') {
+      this.$message.error('请填写文章简介');
+      return false;
+    }
+    return true;
   }
 
   created() {
@@ -198,14 +232,12 @@ export default class ArticleEdit extends Vue {
   .tag-bar {
     margin-top: 20px;
     min-height: 50px;
-    border: solid 1px #ddd;
     display: flex;
     padding: 10px 10px;
     align-items: center;
     .tag-label {
-      display: inline-block;
-      position: relative;
       margin-right: 10px;
+      min-width: 60px;
     }
     .tags {
       .el-tag + .el-tag {
@@ -213,7 +245,6 @@ export default class ArticleEdit extends Vue {
         margin-bottom: 5px;
       }
       .button-new-tag {
-        margin-left: 10px;
         height: 32px;
         line-height: 30px;
         padding-top: 0;
@@ -224,6 +255,16 @@ export default class ArticleEdit extends Vue {
         margin-left: 10px;
         vertical-align: bottom;
       }
+    }
+  }
+  .one-row {
+    margin-top: 20px;
+    display: flex;
+    padding: 10px 10px;
+    align-items: center;
+    .row-label {
+      margin-right: 10px;
+      min-width: 60px;
     }
   }
   .upload-control {
